@@ -33,7 +33,7 @@ pipeline {
         MAVEN_OPTS = "-Dspring.profiles.active=${params.ENVIRONMENT} -Dmaven.artifact.threads=10"
         DOCKER_BUILDKIT = '1'
         COMPOSE_DOCKER_CLI_BUILD = '1'
-//         SONARQUBE = credentials('sonar-token')
+        SONARQUBE = credentials('sonar-token')
         EUREKA_SERVER_PORT = '8761'
         DB_USERNAME = 'mongodb'
         DB_NAME = 'buy01'
@@ -159,34 +159,34 @@ pipeline {
                 }
             }
         }
-//         stage('Tests sonarqube backend') {
-//             steps {
-//                 echo '================================================'
-//                 echo 'Démarrage des tests sonarqube sur le backend'
-//                 withSonarQubeEnv('SONARQUBE'){
-//                     sh 'mvn sonar:sonar -Dsonar.projectKey=app-backend'
-//                 }
-//             }
-//         }
-//         stage('Tests sonarqube sur frontend') {
-//             steps {
-//                 echo '================================================'
-//                 echo 'Démarrage des tests sonarqube sur le frontend'
-//                 withSonarQubeEnv('SONARQUBE') {
-//                     sh '''
-//                      cd frontend
-//                      SONAR_TOKEN=${SONARQUBE} node sonar-project.js
-//                     '''
-//                 }
-//             }
-//         }
-//          stage('Quality Gate') {
-//             steps {
-//                 timeout(time: 2, unit: 'MINUTES') {
-//                     waitForQualityGate abortPipeline: true
-//                 }
-//             }
-//          }
+        stage('Tests sonarqube backend') {
+            steps {
+                echo '================================================'
+                echo 'Démarrage des tests sonarqube sur le backend'
+                withSonarQubeEnv('SONARQUBE'){
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=app-backend'
+                }
+            }
+        }
+        stage('Tests sonarqube sur frontend') {
+            steps {
+                echo '================================================'
+                echo 'Démarrage des tests sonarqube sur le frontend'
+                withSonarQubeEnv('SONARQUBE') {
+                    sh '''
+                     cd frontend
+                     SONAR_TOKEN=${SONARQUBE} node sonar-project.js
+                    '''
+                }
+            }
+        }
+         stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+         }
 
         stage('Docker Build') {
             steps {
