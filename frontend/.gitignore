@@ -42,6 +42,6 @@ testem.log
 Thumbs.db
 
 # packages
-package-lock.json
+#package-lock.json
 yarn.lock
 .vscode
