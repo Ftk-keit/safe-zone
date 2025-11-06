@@ -12,4 +12,5 @@ sonarqubeScanner(
         },
     },
     () => process.exit()
-);
+).then(r =>
+console.log("Scanner finished"));
