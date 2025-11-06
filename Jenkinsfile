@@ -104,7 +104,7 @@ pipeline {
                     echo 'Bien joué'
                 }
                 unsuccessful {
-                    echo 'Mhum tima il y a une erreur'
+                    echo 'Mhum tima il y a une erreur '
                 }
             }
         }
