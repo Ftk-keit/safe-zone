@@ -33,7 +33,7 @@ pipeline {
         MAVEN_OPTS = "-Dspring.profiles.active=${params.ENVIRONMENT} -Dmaven.artifact.threads=10"
         DOCKER_BUILDKIT = '1'
         COMPOSE_DOCKER_CLI_BUILD = '1'
-        SONARQUBE = credentials('token-sonarQube')
+        SONAR_TOKEN = credentials('token-sonarQube')
         EUREKA_SERVER_PORT = '8761'
         DB_USERNAME = 'mongodb'
         DB_NAME = 'buy01'
@@ -163,7 +163,7 @@ pipeline {
             steps {
                 echo '================================================'
                 echo 'Démarrage des tests sonarqube sur le backend'
-                withSonarQubeEnv('SONARQUBE'){
+                withSonarQubeEnv('SonarQube'){
                     sh 'mvn sonar:sonar -Dsonar.projectKey=app-backend'
                 }
             }
@@ -172,10 +172,10 @@ pipeline {
             steps {
                 echo '================================================'
                 echo 'Démarrage des tests sonarqube sur le frontend'
-                withSonarQubeEnv('SONARQUBE') {
+                withSonarQubeEnv('SonarQube') {
                     sh '''
                      cd frontend
-                     SONAR_TOKEN=${SONARQUBE} node sonar-project.js
+                     SONAR_TOKEN=${SONAR_TOKEN} node sonar-project.js
                     '''
                 }
             }
