@@ -33,7 +33,7 @@ pipeline {
         MAVEN_OPTS = "-Dspring.profiles.active=${params.ENVIRONMENT} -Dmaven.artifact.threads=10"
         DOCKER_BUILDKIT = '1'
         COMPOSE_DOCKER_CLI_BUILD = '1'
-        SONARQUBE = credentials('sonar-token')
+        SONARQUBE = credentials('token-sonarQube')
         EUREKA_SERVER_PORT = '8761'
         DB_USERNAME = 'mongodb'
         DB_NAME = 'buy01'
