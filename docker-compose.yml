@@ -1,9 +1,9 @@
-name: mr-jenk
+name: safe-zone
 
 services:
     mongodb:
         image: mongo:latest
-        container_name: mr-jenk-mongo-database
+        container_name: safe-zone-mongo-database
         restart: unless-stopped
 #        ports:
 #            - "27017:27017"
@@ -14,7 +14,7 @@ services:
             - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
             - MONGO_INITDB_DATABASE=${DB_NAME}
         networks:
-            - buy01-network
+            - safe-zone-network
         healthcheck:
             test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test -quiet
             interval: 10s
@@ -54,7 +54,7 @@ services:
         build:
             context: .
             dockerfile: ./eureka-server/Dockerfile
-        container_name: mr-jenk-eureka-server
+        container_name: safe-zone-eureka-server
         restart: unless-stopped
         ports:
             - "${EUREKA_SERVER_PORT}:${EUREKA_SERVER_PORT}"
@@ -62,7 +62,7 @@ services:
             - EUREKA_SERVER_PORT=${EUREKA_SERVER_PORT}
             - SPRING_PROFILES_ACTIVE=docker
         networks:
-            - buy01-network
+            - safe-zone-network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
             interval: 30s
@@ -74,7 +74,7 @@ services:
         build:
             context: .
             dockerfile: ./api-gateway/Dockerfile
-        container_name: mr-jenk-api-gateway
+        container_name: safe-zone-api-gateway
         restart: unless-stopped
         ports:
             - "8080:8080"
@@ -87,7 +87,7 @@ services:
             eureka-server:
                 condition: service_healthy
         networks:
-            - buy01-network
+            - safe-zone-network
         healthcheck:
             test: [ "CMD", "curl", "-kf", "https://localhost:8080/actuator/health" ]
             interval: 30s
@@ -98,7 +98,7 @@ services:
         build:
             context: .
             dockerfile: ./user-service/Dockerfile
-        container_name: mr-jenk-user-service
+        container_name: safe-zone-user-service
         restart: unless-stopped
 #        ports:
 #            - "8081:8081"
@@ -120,7 +120,7 @@ services:
             mongodb:
                 condition: service_healthy
         networks:
-            - buy01-network
+            - safe-zone-network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health" ]
             interval: 30s
@@ -131,7 +131,7 @@ services:
         build:
             context: .
             dockerfile: ./product-service/Dockerfile
-        container_name: mr-jenk-product-service
+        container_name: safe-zone-product-service
         restart: unless-stopped
 #        ports:
 #            - "8082:8082"
@@ -150,7 +150,7 @@ services:
             mongodb:
                 condition: service_healthy
         networks:
-            - buy01-network
+            - safe-zone-network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:8082/actuator/health" ]
             interval: 30s
@@ -161,7 +161,7 @@ services:
         build:
             context: .
             dockerfile: ./media-service/Dockerfile
-        container_name: mr-jenk-media-service
+        container_name: safe-zone-media-service
         restart: unless-stopped
 #        ports:
 #            - "8083:8083"
@@ -182,7 +182,7 @@ services:
             mongodb:
                 condition: service_healthy
         networks:
-            - buy01-network
+            - safe-zone-network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:8083/actuator/health" ]
             interval: 30s
@@ -193,7 +193,7 @@ services:
         build:
             context: ./frontend
             dockerfile: Dockerfile
-        container_name: mr-jenk-frontend
+        container_name: safe-zone-frontend
         restart: unless-stopped
         ports:
             - "4200:4200"
@@ -205,5 +205,5 @@ volumes:
     mongodb_data:
 
 networks:
-    buy01-network:
+    safe-zone-network:
         driver: bridge
