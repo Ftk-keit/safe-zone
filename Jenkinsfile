@@ -159,6 +159,35 @@ pipeline {
                 }
             }
         }
+//         stage('Tests sonarqube backend') {
+//             steps {
+//                 echo '================================================'
+//                 echo 'Démarrage des tests sonarqube sur le backend'
+//                 withSonarQubeEnv('SONARQUBE'){
+//                     sh 'mvn sonar:sonar -Dsonar.projectKey=app-backend'
+//                 }
+//             }
+//         }
+//         stage('Tests sonarqube sur frontend') {
+//             steps {
+//                 echo '================================================'
+//                 echo 'Démarrage des tests sonarqube sur le frontend'
+//                 withSonarQubeEnv('SONARQUBE') {
+//                     sh '''
+//                      cd frontend
+//                      SONAR_TOKEN=${SONARQUBE} node sonar-project.js
+//                     '''
+//                 }
+//             }
+//         }
+         stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+         }
+
         stage('Docker Build') {
             steps {
                 echo '🐳 Construction des images Docker avec cache optimisé...'
