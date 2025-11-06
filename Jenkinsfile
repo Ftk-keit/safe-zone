@@ -94,7 +94,7 @@ pipeline {
                 expression {params.RUN_TESTS == true}
             }
             steps {
-                echo 'Compilation et tests jUnit '
+                echo 'Compilation et tests jUnit'
                 sh 'mvn package -T 2C'
                 junit '**/target/surefire-reports/*.xml'
             }
