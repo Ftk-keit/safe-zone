@@ -28,11 +28,12 @@ public class S3Service {
                 throw new IllegalArgumentException("Le fichier ne peut pas être vide");
             }
 
-            String originalFilename = file.getOriginalFilename() != null ?
-                    file.getOriginalFilename() : "file";
-
+            String originalFilename = file.getOriginalFilename();
+            String safeFilename = (originalFilename != null && !originalFilename.isEmpty())
+                    ? originalFilename
+                    : "file";
             String fileName = System.currentTimeMillis() + "_" +
-                    originalFilename.replaceAll("[^a-zA-Z0-9._-]", "_");
+                    safeFilename.replaceAll("[^a-zA-Z0-9._-]", "_");
 
             byte[] bytes = file.getBytes();
 

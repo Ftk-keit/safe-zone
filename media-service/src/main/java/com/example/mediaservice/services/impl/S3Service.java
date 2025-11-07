@@ -29,10 +29,12 @@ public class S3Service {
                 throw new IllegalArgumentException("Le fichier ne peut pas être vide");
             }
 
-            String originalFilename = file.getOriginalFilename() != null ?
-                    file.getOriginalFilename() : "file";
+            String originalFilename = file.getOriginalFilename();
+            String safeFilename = (originalFilename != null && !originalFilename.isEmpty())
+                    ? originalFilename
+                    : "file";
             String fileName = System.currentTimeMillis() + "_" +
-                    originalFilename.replaceAll("[^a-zA-Z0-9._-]", "_");
+                    safeFilename.replaceAll("[^a-zA-Z0-9._-]", "_");
 
             byte[] bytes = file.getBytes();
 
@@ -55,42 +57,42 @@ public class S3Service {
         }
     }
 
-    public String uploadFile(MultipartFile file, String customBucketName, String key) {
-        try {
-            if (file == null || file.isEmpty()) {
-                throw new IllegalArgumentException("Le fichier ne peut pas être vide");
-            }
-
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(customBucketName)
-                    .key(key)
-                    .contentType(file.getContentType())
-                    .contentLength(file.getSize())
-                    .build();
-
-            s3Client.putObject(putObjectRequest,
-                    RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-
-            return String.format("https://%s.s3.%s.amazonaws.com/%s",
-                    customBucketName, region, key);
-
-        } catch (IOException e) {
-            throw new RuntimeException("Erreur lecture fichier: " + e.getMessage(), e);
-        } catch (Exception e) {
-            throw new RuntimeException("Erreur upload S3: " + e.getMessage(), e);
-        }
-    }
-
-    public void deleteFile(String fileName) {
-        try {
-            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(fileName)
-                    .build();
-
-            s3Client.deleteObject(deleteObjectRequest);
-        } catch (Exception e) {
-            throw new RuntimeException("Erreur suppression S3: " + e.getMessage(), e);
-        }
-    }
+//    public String uploadFile(MultipartFile file, String customBucketName, String key) {
+//        try {
+//            if (file == null || file.isEmpty()) {
+//                throw new IllegalArgumentException("Le fichier ne peut pas être vide");
+//            }
+//
+//            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+//                    .bucket(customBucketName)
+//                    .key(key)
+//                    .contentType(file.getContentType())
+//                    .contentLength(file.getSize())
+//                    .build();
+//
+//            s3Client.putObject(putObjectRequest,
+//                    RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+//
+//            return String.format("https://%s.s3.%s.amazonaws.com/%s",
+//                    customBucketName, region, key);
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException("Erreur lecture fichier: " + e.getMessage(), e);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Erreur upload S3: " + e.getMessage(), e);
+//        }
+//    }
+//
+//    public void deleteFile(String fileName) {
+//        try {
+//            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+//                    .bucket(bucketName)
+//                    .key(fileName)
+//                    .build();
+//
+//            s3Client.deleteObject(deleteObjectRequest);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Erreur suppression S3: " + e.getMessage(), e);
+//        }
+//    }
 }
