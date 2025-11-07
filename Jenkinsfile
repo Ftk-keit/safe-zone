@@ -171,7 +171,11 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     sh '''
                      cd frontend
-                     SONAR_TOKEN=${SONAR_TOKEN} node sonar-project.js
+                     npx sonarqube-scanner \
+                    -Dsonar.projectKey=app-frontend \
+                    -Dsonar.sources=src \
+                    -Dsonar.host.url=${SONAR_HOST_URL} \
+                    -Dsonar.token=${SONAR_TOKEN}
                     '''
                 }
             }
