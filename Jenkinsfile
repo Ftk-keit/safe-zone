@@ -183,7 +183,7 @@ pipeline {
         }
          stage('Quality Gate') {
             steps {
-                timeout(time: 15, unit: 'MINUTES') {
+                timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
@@ -198,6 +198,7 @@ pipeline {
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY'),
                     string(credentialsId: 'keystore-password', variable: 'KEY_STORE_PASSWORD')
+                    string(credentialsId: 'default-user-safe-zone', variable: 'DEFAULT_USER_PASSWORD')
                 ]) {
                     sh '''
                         export DOCKER_BUILDKIT=1
@@ -221,6 +222,7 @@ pipeline {
                         string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
                         string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY'),
                         string(credentialsId: 'keystore-password', variable: 'KEY_STORE_PASSWORD')
+                        string(credentialsId: 'default-user-safe-zone', variable: 'DEFAULT_USER_PASSWORD')
                     ]) {
 
                        sh '''

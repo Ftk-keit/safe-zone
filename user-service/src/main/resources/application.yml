@@ -29,6 +29,9 @@ application:
             secret: ${JWT_SECRET}
             expiration-ms: 3600000
             refresh-expiration: 3600000
+    default:
+      user:
+        password: ${DEFAULT_USER_PASSWORD}
 
 server:
     port: 8081
