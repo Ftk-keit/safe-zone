@@ -34,6 +34,7 @@ pipeline {
         DOCKER_BUILDKIT = '1'
         COMPOSE_DOCKER_CLI_BUILD = '1'
         SONAR_TOKEN = credentials('token-sonarQube')
+        SONAR_HOST_URL = 'http://localhost:9000'
         EUREKA_SERVER_PORT = '8761'
         DB_USERNAME = 'mongodb'
         DB_NAME = 'buy01'
