@@ -45,7 +45,7 @@ public class DataInitializer {
                 User client = User.builder()
                         .name("Anna Ndiaye")
                         .email("anna@user.com")
-                        .password(passwordEncoder.encode(defaultPassword))
+                        .password(passwordEncoder.encode(defaultPassword + "1"))
                         .role(Role.CLIENT)
                         .build();
                 userRepository.save(client);
@@ -53,7 +53,7 @@ public class DataInitializer {
                 User johndoe = User.builder()
                         .name("John DOE")
                         .email("johndoe@user.com")
-                        .password(passwordEncoder.encode(defaultPassword))
+                        .password(passwordEncoder.encode(defaultPassword + "2"))
                         .role(Role.CLIENT)
                         .build();
                 userRepository.save(johndoe);
