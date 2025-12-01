@@ -4,12 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+
 @SpringBootApplication
 //@EnableMongoAuditing
-@ComponentScan(basePackages = {
-        "com.cgl.userservice",
-        "com.example.share"
+@Import({
+        com.example.share.config.S3Config.class,
+        com.example.share.services.S3Service.class
 })
 @EnableDiscoveryClient
 public class UserServiceApplication {
