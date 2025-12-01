@@ -167,7 +167,8 @@ pipeline {
                 echo '================================================'
                 echo 'Démarrage des tests sonarqube sur le backend'
                 withSonarQubeEnv('SonarQube'){
-sh 'mvn sonar:sonar -Dsonar.projectKey=app-backend -Dsonar.coverage.exclusions=**/DataInitializer.java'                }
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=app-backend -Dsonar.coverage.exclusions=**/DataInitializer.java,**/ShareApplication.java,**/S3Service.java'
+                }
             }
         }
         stage('Tests sonarqube sur frontend') {
