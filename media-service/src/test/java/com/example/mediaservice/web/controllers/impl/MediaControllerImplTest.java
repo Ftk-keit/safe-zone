@@ -2,17 +2,11 @@ package com.example.mediaservice.web.controllers.impl;
 
 import com.example.mediaservice.data.entities.Media;
 import com.example.mediaservice.services.MediaService;
-import com.example.mediaservice.services.impl.MediaServiceImpl;
-import com.example.mediaservice.services.impl.S3Service;
-import lombok.RequiredArgsConstructor;
+import com.example.share.services.S3Service;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +15,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(MediaControllerImpl.class)

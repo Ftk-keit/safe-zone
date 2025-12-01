@@ -2,7 +2,6 @@ package com.cgl.userservice.web.controllers.impl;
 
 import com.cgl.userservice.data.entities.User;
 import com.cgl.userservice.services.UserService;
-import com.cgl.userservice.services.impl.S3Service;
 import com.cgl.userservice.utils.mapper.MapperUser;
 import com.cgl.userservice.web.controllers.UserController;
 import com.cgl.userservice.web.dto.ChangePasswordRequest;
