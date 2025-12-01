@@ -96,7 +96,12 @@ pipeline {
             }
             steps {
                 echo 'Compilation et tests jUnit'
-                sh 'mvn package -T 2C'
+                withCredentials([
+                    string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    sh 'mvn package -T 2C'
+                }
                 junit '**/target/surefire-reports/*.xml'
             }
             post {
