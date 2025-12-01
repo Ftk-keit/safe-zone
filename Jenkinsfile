@@ -98,7 +98,7 @@ pipeline {
                 echo 'Compilation et tests jUnit'
                 withCredentials([
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
+                    string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY'),
                     string(credentialsId: 'default-user-safe-zone', variable: 'DEFAULT_USER_PASSWORD')
                 ]) {
                     sh 'mvn package -T 2C'
