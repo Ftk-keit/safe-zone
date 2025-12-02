@@ -345,7 +345,13 @@ pipeline {
                         <p><b>Erreur:</b> ${currentBuild.result}</p>
                         <p><b>Voir les logs:</b> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></p>
                         <hr>
-                        <p style="color: red;">⚠️ Une erreur s'est produite. Vérifiez les logs pour plus de détails.</p>
+                        <h3>📊 Rapports SonarQube :</h3>
+                        <ul>
+                            <li><b>Backend:</b> <a href="http://localhost:9000/dashboard?id=safe-zone-backend">Voir le rapport Backend</a></li>
+                            <li><b>Frontend:</b> <a href="http://localhost:9000/dashboard?id=safe-zone-frontend">Voir le rapport Frontend</a></li>
+                        </ul>
+                        <hr>
+                        <p style="color: red;">⚠️ Une erreur s'est produite. Vérifiez les logs et SonarQube pour plus de détails.</p>
                     </body>
                     </html>
                 """,
